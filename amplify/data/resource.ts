@@ -1,4 +1,5 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import { getTodos } from "../functions/getTodos/resource";
 import { sayHello } from "../functions/say-hello/resource";
 
 /*== STEP 1 ===============================================================
@@ -23,6 +24,12 @@ const schema = a.schema({
       isDone: a.boolean(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
+
+  getTodos: a
+    .query()
+    .returns(a.ref("Todo").array())
+    .authorization((allow) => [allow.publicApiKey()])
+    .handler(a.handler.function(getTodos)),
 });
 
 // Used for code completion / highlighting when making requests from frontend
