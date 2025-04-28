@@ -1,5 +1,4 @@
 import { env } from "$amplify/env/getTodos";
-import { generateClient } from "aws-amplify/api";
 import { DynamoDB } from "aws-sdk";
 import type { Schema } from "../../data/resource";
 
@@ -15,14 +14,13 @@ export const handler: Schema["getTodos"]["functionHandler"] = async (
   event: any,
   context: any
 ) => {
-  // export const handler = async (event: any, context: any) => {
   const dynamoDb = new DynamoDB.DocumentClient();
 
-  const client = generateClient<Schema>();
-  const { data: todos, errors } = await client.models.Todo.list();
-  console.log("kar>>>>");
-  console.log("todos", todos);
-  console.log("errors", errors);
+  // const client = generateClient<Schema>();
+  // const { data: todos, errors } = await client.models.Todo.list();
+  // console.log("kar>>>>");
+  // console.log("todos", todos);
+  // console.log("errors", errors);
   //   return todos;
 
   const params = {
