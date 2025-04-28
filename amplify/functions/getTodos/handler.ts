@@ -1,4 +1,5 @@
 import { env } from "$amplify/env/getTodos";
+import { generateClient } from "aws-amplify/api";
 import { DynamoDB } from "aws-sdk";
 import type { Schema } from "../../data/resource";
 
@@ -17,8 +18,11 @@ export const handler: Schema["getTodos"]["functionHandler"] = async (
   // export const handler = async (event: any, context: any) => {
   const dynamoDb = new DynamoDB.DocumentClient();
 
-  //   const client = generateClient<Schema>();
-  //   const { data: todos, errors } = await client.models.Todo.list();
+  const client = generateClient<Schema>();
+  const { data: todos, errors } = await client.models.Todo.list();
+  console.log("kar>>>>");
+  console.log("todos", todos);
+  console.log("errors", errors);
   //   return todos;
 
   const params = {
@@ -42,6 +46,7 @@ export const handler: Schema["getTodos"]["functionHandler"] = async (
 
     // return data.Items; // Returns the list of todos
   } catch (error) {
+    console.log("Kar__error");
     console.error("Error fetching todos:", error);
     throw new Error("Could not retrieve todos");
   }
