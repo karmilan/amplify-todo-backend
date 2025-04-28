@@ -1,4 +1,5 @@
 import { defineBackend } from "@aws-amplify/backend";
+import { aws_iam as iam } from "aws-cdk-lib";
 import { auth } from "./auth/resource";
 import { data } from "./data/resource";
 import { getTodos } from "./functions/getTodos/resource";
@@ -12,17 +13,15 @@ export const backend = defineBackend({
   data,
   sayHello,
   getTodos,
-
-  // Define your DynamoDB Table
-  // todoTable: data.dynamodbTable({
-  //   partitionKey: { name: 'id', type: 'string' },
-  // }),
-
-  // Define your Lambda function
-  // getTodosLambda: amplifyFunction({
-  //   entry: './path-to-getTodos.handler', // path to your function file
-  //   environment: {
-  //     TABLE_NAME: data.,
-  //   },
-  // }),
 });
+
+// Grant specific table access from data API
+backend.getTodos.resources.lambda.addToRolePolicy(
+  new iam.PolicyStatement({
+    effect: iam.Effect.ALLOW,
+    actions: ["dynamodb:Scan"],
+    resources: [
+      "arn:aws:dynamodb:ap-southeast-1:542353478124:table/Todo-5olcjfy4ynaexovoaqbqk7mzku-NONE",
+    ],
+  })
+);
