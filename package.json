@@ -21,6 +21,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@dotenvx/dotenvx": "^1.41.0",
     "aws-amplify": "^6.14.1",
     "aws-sdk": "^2.1692.0"
   }
